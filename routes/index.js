@@ -3,18 +3,13 @@ var router = express.Router();
 const passport = require('passport');
 require('./passport')(passport);
 
-router.post('/', passport.authenticate('bearer', { session: false }),
+router.post('', passport.authenticate('bearer', { session: false }),
   function(req, res) {
-    res.json({ username: req.user.name });
+    res.json({ success: true });
   });
-// var Modle = new model();
-// Modle.name = '测试';
-// Modle.save(function(error) {
-//   if (error) {
-//     res.send('<script>alert(\'添加失败\')</script>');
-//   } else {
-//     res.send('<script>alert(\'添加成功\')</script>');
-//   }
+// router.post('', function(req, res) {
+//   res.json({ success: true });
 // });
+
 // res.render('index', { title: 'Express测试' });
 module.exports = router;
