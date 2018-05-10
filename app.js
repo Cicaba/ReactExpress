@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.all('/index*', auth);
+auth(app);
 app.use('/login', login);
 app.use('/index', index);
 
