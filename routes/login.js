@@ -16,7 +16,8 @@ router.post('', function(req, res, next) {
           success: true,
           message: '验证成功!',
           token: 'Bearer ' + token,
-          name: reqData.userName
+          name: data.userName,
+          id: data.id
         });
       });
     } else {

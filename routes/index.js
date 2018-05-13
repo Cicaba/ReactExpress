@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const passport = require('passport');
+let express = require('express');
+let router = express.Router();
+let modelDB = require('./mongodb/imagesDB');
+let passport = require('passport');
 require('./passport')(passport);
 
 // router.post('', passport.authenticate('bearer', { session: false }),
@@ -11,5 +12,33 @@ router.post('', function(req, res) {
   res.json({ success: true });
 });
 
-// res.render('index', { title: 'Express测试' });
+router.post('/upData', function(req, res) {
+  let reqData = req.body;
+  modelDB.findOne({ userID: reqData.userID }, (err, data) => {
+    if (!data) {
+      let model = new modelDB();
+      model.imgs = reqData.imgs;
+      model.userId = reqData.userId;
+      model.userName = reqData.userName;
+
+      model.save((err, Obj) => {
+        if (!err) {
+          res.json({ success: true, message: '保存成功!' });
+        } else {
+          res.json({ success: false, message: '保存失败!' });
+        }
+      });
+    } else {
+      modelDB.updateOne(data, { imgs: data.imgs.concat(reqData.imgs) }, (error) => {
+        if (!error) {
+          res.json({ success: true, message: '保存成功!' });
+        } else {
+          res.json({ success: false, message: '保存失败!' });
+        }
+      });
+    }
+  });
+
+});
+
 module.exports = router;

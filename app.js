@@ -22,9 +22,14 @@ app.use(passport.initialize()); // 初始化passport模块
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 //解析application/json 解析
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  uploadDir: __dirname + '/upload',
+  keepExtensions: true,
+  limit: '50mb'
+}));
 //解析application/x-www-form-urlencoded 解析
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

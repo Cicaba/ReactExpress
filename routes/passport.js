@@ -1,15 +1,16 @@
 const Strategy = require('passport-http-bearer').Strategy;
-const model = require('./mongodb/users');
+// const model = require('./mongodb/users');
 const jwt = require('jsonwebtoken');
 
 module.exports = function(passport) {
   passport.use(new Strategy(
     function(token, done) {
       jwt.verify(token, 'cicaba', function(err, decoded) {
-        console.log(err);
         if (!err) {
-          return done();
+          console.log('用户验证成功!');
+          return done(null, true);
         } else {
+          console.log('用户验证失败!');
           return done(err);
         }
       });
