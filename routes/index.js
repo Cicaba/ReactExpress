@@ -11,7 +11,7 @@ require('./passport')(passport);
 router.post('', function(req, res) {
   res.json({ success: true });
 });
-
+//保存图片
 router.post('/upData', function(req, res) {
   let reqData = req.body;
   modelDB.findOne({ userID: reqData.userID }, (err, data) => {
@@ -38,7 +38,21 @@ router.post('/upData', function(req, res) {
       });
     }
   });
-
+});
+//获取图片
+router.post('/getImgs', (req, res, next) => {
+  let reqData = req.body;
+  modelDB.findOne(reqData, (error, data) => {
+    if (!data) {
+      res.json({ success: false, 'message': '没有查询到数据' });
+    } else {
+      let url = [];
+      data.imgs.forEach(el => {
+        url.push(`/index/img/${el.name}`);
+      });
+      res.json({ success: true, data: url });
+    }
+  });
 });
 
 module.exports = router;

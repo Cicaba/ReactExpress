@@ -6,7 +6,8 @@ module.exports = function(app) {
     if (!err) {
       return next();
     } else {
-      res.json({ succes: false, message: '请重新登陆!' });
+      res.status(401).end();
+      // res.json({ succes: false, message: '请重新登陆!' });
     }
   });
 };
