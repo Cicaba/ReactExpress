@@ -12,12 +12,14 @@ router.post('', function(req, res, next) {
         expiresIn: 10080 // token到期时间设置
       });
       model.updateOne(reqData, { token: token }, (error, obj) => {
+        global.classify = data.classify;
         res.json({
           success: true,
           message: '验证成功!',
           token: 'Bearer ' + token,
           name: data.userName,
-          id: data.id
+          id: data.id,
+          classify: data.classify
         });
       });
     } else {

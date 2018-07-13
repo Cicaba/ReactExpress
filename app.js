@@ -13,6 +13,7 @@ const passport = require('passport'); // 用户认证模块passport
 var index = require('./routes/index');
 var auth = require('./routes/auth/auth');
 var login = require('./routes/login');
+var classify = require('./routes/classify');
 
 var app = express();
 app.use(logger({ stream: accessLogfile }));
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 auth(app);
 app.use('/login', login);
 app.use('/index', index);
+app.use('/index/classify', classify);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
